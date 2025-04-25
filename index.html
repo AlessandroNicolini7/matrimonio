@@ -86,12 +86,11 @@
       border-radius: 8px;
     }
 
-    /* Animazione foglie */
     .leaf {
       position: absolute;
       width: 40px;
       height: 40px;
-      background-image: url('foglia.png'); /* immagine foglia in png */
+      background-image: url('foglia.png');
       background-size: contain;
       background-repeat: no-repeat;
       animation: fall linear infinite;
@@ -108,7 +107,6 @@
       }
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       .overlay {
         padding: 30px;
@@ -146,13 +144,13 @@
     <div class="copied-msg" id="copied-msg">✅ IBAN copiato!</div>
   </div>
 
-  <!-- AUDIO DI SOTTOFONDO -->
+  <!-- AUDIO LOCALE -->
   <audio id="bg-music" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/11/03/audio_1f6956d640.mp3?filename=relaxing-japanese-koto-ambient-124005.mp3" type="audio/mpeg">
+    <source src="musica.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'audio HTML5.
   </audio>
 
-  <!-- PULSANTE ON/OFF AUDIO -->
+  <!-- PULSANTE AUDIO -->
   <button onclick="toggleMusic()" style="
     position: fixed;
     bottom: 20px;
@@ -170,7 +168,6 @@
     🎵 Musica: On/Off
   </button>
 
-  <!-- SCRIPT PER IBAN E MUSICA -->
   <script>
     function copyIBAN() {
       const ibanText = document.getElementById('iban-text').innerText;
@@ -192,7 +189,6 @@
       }
     }
 
-    // Genera foglie random
     for (let i = 0; i < 15; i++) {
       const leaf = document.createElement("div");
       leaf.className = "leaf";
