@@ -86,27 +86,6 @@
       border-radius: 8px;
     }
 
-    .leaf {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background-image: url('foglia.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
     @media (max-width: 600px) {
       .overlay {
         padding: 30px;
@@ -126,6 +105,26 @@
         padding: 12px;
       }
     }
+
+    .music-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 99;
+      background-color: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #fff;
+      backdrop-filter: none;
+    }
+
+    .music-button:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
   </style>
 </head>
 <body>
@@ -144,29 +143,12 @@
     <div class="copied-msg" id="copied-msg">✅ IBAN copiato!</div>
   </div>
 
-  <!-- AUDIO LOCALE -->
   <audio id="bg-music" autoplay loop>
     <source src="musica.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'audio HTML5.
   </audio>
 
-  <!-- PULSANTE AUDIO -->
-  <button onclick="toggleMusic()" style="
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 99;
-    background-color: rgba(255,255,255,0.4);
-    backdrop-filter: blur(6px);
-    border: 1px solid #ccc;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #000;">
-    🎵 Musica: On/Off
-  </button>
+  <button class="music-button" onclick="toggleMusic()">🎵 Musica: On/Off</button>
 
   <script>
     function copyIBAN() {
@@ -187,15 +169,6 @@
       } else {
         audio.pause();
       }
-    }
-
-    for (let i = 0; i < 15; i++) {
-      const leaf = document.createElement("div");
-      leaf.className = "leaf";
-      leaf.style.left = Math.random() * 100 + "vw";
-      leaf.style.animationDuration = (5 + Math.random() * 5) + "s";
-      leaf.style.animationDelay = Math.random() * 5 + "s";
-      document.body.appendChild(leaf);
     }
   </script>
 </body>
