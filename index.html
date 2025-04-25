@@ -5,6 +5,7 @@
   <title>Viaggio di nozze in Giappone</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
+    /* CSS rimane invariato rispetto alla versione precedente */
     body {
       margin: 0;
       padding: 0;
@@ -20,7 +21,7 @@
       justify-content: center;
       text-align: center;
       font-family: 'Playfair Display', serif;
-      overflow: hidden; /* Mantiene l'overlay nascosto inizialmente */
+      overflow: hidden;
     }
 
     .overlay {
@@ -32,16 +33,15 @@
       max-width: 800px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       color: white;
-      opacity: 0; /* Inizia completamente trasparente */
-      transform: translateY(20px); /* Inizia leggermente spostato verso il basso */
-      /* MODIFICA QUI: Aggiunto '3s' come delay prima di 'forwards' */
+      opacity: 0;
+      transform: translateY(20px);
       animation: fadeIn 7s ease 1.2s forwards;
     }
 
     @keyframes fadeIn {
       to {
-        opacity: 1; /* Diventa completamente opaco */
-        transform: translateY(0); /* Torna alla posizione originale */
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
@@ -78,7 +78,7 @@
     .copied-msg {
       display: none;
       margin-top: 10px;
-      font-size: 0.5rem; /* Ridimensionato leggermente */
+      font-size: 0.5rem;
       color: #000;
       background-color: transparent;
       background: rgba(255,255,255,0.25);
@@ -91,36 +91,26 @@
         padding: 30px;
         max-width: 90%;
       }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      p {
-        font-size: 1.2rem;
-      }
-
-      .iban {
-        font-size: 1.1rem;
-        padding: 12px;
-      }
+      h1 { font-size: 2rem; }
+      p { font-size: 1.2rem; }
+      .iban { font-size: 1.1rem; padding: 12px; }
     }
 
     .music-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 99;
-        background-color: transparent;
-        border: 1px solid rgba(255,255,255,0.5);
-        padding: 10px 15px;
-        border-radius: 10px;
-        font-family: 'Playfair Display', serif;
-        font-size: 1rem;
-        cursor: pointer;
-        color: #fff;
-        backdrop-filter: none; /* Rimosso blur per performance/estetica */
-      }
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 99;
+      background-color: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #fff;
+      backdrop-filter: none;
+    }
 
     .music-button:hover {
       background-color: rgba(255,255,255,0.1);
@@ -129,7 +119,7 @@
 </head>
 <body>
   <div class="overlay">
-    <h1>恋の旅 "koi no tabi"<br>  Viaggio d'Amore ❤️</h1>
+     <h1>恋の旅 "koi no tabi"<br>  Viaggio d'Amore ❤️</h1>
     <p>
       L'espressione indica un'esperienza legata all'amore e alle emozioni che ne derivano.<br>
       Può riferirsi sia a un viaggio fisico che metaforico: è un percorso di scoperta e crescita personale attraverso il sentimento dell'amore.<br>
@@ -143,7 +133,6 @@
     <div class="copied-msg" id="copied-msg">✅ IBAN copiato!</div>
   </div>
 
-
   <audio id="bg-music" autoplay loop>
     <source src="musica.mp3" type="audio/mpeg">
     Il tuo browser non supporta l'elemento audio.
@@ -153,47 +142,64 @@
 
   <script>
     function copyIBAN() {
-      // Estrae solo il testo IBAN e Intestatari
       const ibanElement = document.getElementById('iban-text');
-      const ibanFullText = ibanElement.innerText; // Prende tutto il testo visibile
-
-      // Usa l'API Clipboard per copiare
+      const ibanFullText = ibanElement.innerText;
       navigator.clipboard.writeText(ibanFullText).then(() => {
         const msg = document.getElementById('copied-msg');
         msg.style.display = 'block';
-        setTimeout(() => { msg.style.display = 'none'; }, 2000); // Nasconde dopo 2 sec
+        setTimeout(() => { msg.style.display = 'none'; }, 2000);
       }).catch(err => {
         console.error('Errore nel copiare l\'IBAN: ', err);
-        // Potresti mostrare un messaggio di errore all'utente qui
       });
     }
 
     const audio = document.getElementById("bg-music");
-    // Imposta un volume iniziale più basso
+    const musicButton = document.querySelector(".music-button"); // Seleziona il bottone
+
+    // Imposta il volume iniziale
     audio.volume = 0.2;
 
-    // Tenta di avviare l'audio solo dopo un'interazione dell'utente se l'autoplay fallisce
-    document.body.addEventListener('click', () => {
+    // Funzione per aggiornare l'aspetto del bottone (opzionale ma utile)
+    function updateButtonState() {
         if (audio.paused) {
-            audio.play().catch(e => console.log("Autoplay bloccato, serve interazione utente."));
+            // Potresti cambiare il testo o l'icona se vuoi indicare che è Muto
+            // musicButton.textContent = "🎵 Musica: Off";
+        } else {
+            // musicButton.textContent = "🎵 Musica: On";
         }
-    }, { once: true }); // Esegui solo una volta al primo click
+    }
+
+    // Tenta di avviare la riproduzione e gestisce l'errore se l'autoplay viene bloccato
+    audio.play().then(() => {
+      // Autoplay riuscito (o già avviato dall'attributo autoplay)
+      console.log("Riproduzione audio avviata.");
+      updateButtonState();
+    }).catch(error => {
+      // Autoplay bloccato dal browser
+      console.warn("Autoplay audio bloccato dal browser:", error);
+      // La musica è in pausa, aggiorna il bottone se necessario
+      updateButtonState();
+      // A questo punto, l'utente dovrà cliccare il bottone per avviarla manualmente
+    });
+
+    // Aggiorna lo stato del bottone quando lo stato di play/pausa cambia
+    audio.onplay = updateButtonState;
+    audio.onpause = updateButtonState;
+
 
     function toggleMusic() {
       if (audio.paused) {
-        audio.play();
+        audio.play().catch(e => console.error("Errore durante la riproduzione manuale:", e)); // Aggiunto catch per sicurezza
       } else {
         audio.pause();
       }
+      // Non è più necessario chiamare updateButtonState() qui perché gli eventi onplay/onpause lo fanno
     }
 
-     // Assicura che l'audio parta (se possibile) al caricamento
-     window.addEventListener('load', () => {
-        audio.play().catch(e => {
-             console.log("Autoplay della musica potrebbe essere bloccato dal browser.");
-             // Potresti mostrare un'icona 'play' sul bottone musica
-        });
-     });
+    // Chiamata iniziale per impostare il bottone correttamente
+    // Lo facciamo dopo il tentativo di play() per avere lo stato più aggiornato
+    // updateButtonState(); // Questa chiamata è ora gestita dal .then() e .catch() di audio.play() e dagli eventi onplay/onpause
+
   </script>
 </body>
 </html>
