@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-image: url('sfondo japanese.png'); /* carica il tuo sfondo qui */
+      background-image: url('sfondo japanese.png'); /* Assicurati che il file sia nel repo GitHub */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -68,9 +68,12 @@
     }
 
     .copy-button {
-      margin-top: 30px;
+      margin-top: 20px;
+      font-family: 'Playfair Display', serif;
       color: #000;
-      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       padding: 10px 20px;
       font-weight: bold;
       font-size: 1.3rem;
@@ -80,7 +83,7 @@
     }
 
     .copy-button:hover {
-      background-color: #f0f0f0;
+      background-color: rgba(255, 255, 255, 0.25);
     }
 
     .copied-msg {
@@ -112,6 +115,11 @@
         font-size: 1.1rem;
         padding: 12px;
       }
+
+      .copy-button {
+        font-size: 1.1rem;
+        padding: 8px 16px;
+      }
     }
   </style>
 </head>
@@ -123,7 +131,12 @@
     Se volete potete aiutarci a realizzare questo nostro sogno<br>
     riempiendo le valigie... di emozioni!<br>Arigatō! 🍡🎎</p>
 
-    <button class="copy-button" onclick="copyIBAN()">IBAN: IT57I0306234210000002936209 Intestatari: Sara Pioppi, Alessandro Nicolini</button>
+    <div class="iban" id="iban-text">
+      IBAN: IT57I0306234210000002936209<br>
+      Intestatari: Sara Pioppi, Alessandro Nicolini
+    </div>
+
+    <button class="copy-button" onclick="copyIBAN()">📋 Copia IBAN</button>
     <div class="copied-msg" id="copied-msg">✅ IBAN copiato!</div>
   </div>
 
